@@ -22,6 +22,8 @@ import pytz
 from datetime import timedelta, date
 from datetime import datetime as dt
 import datetime
+
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 @unauthenticated_user
@@ -597,6 +599,110 @@ def view_pt_appointment_hours(request, user_id):
     print(type(pt.account_id))
     # print(user_id)
     return render(request, 'webapp/patient/pt_appointment_page.html', data)
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def record(request):
+    user = request.user
+    data = {'user':user}
+    print(data)
+    return render(request, 'webapp/patient/record.html', data)
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def record_update_info(request):
+    edit_profile_form = EditProfileForm(instance=request.user)
+    if request.method == "POST":
+        #prevpath = request.POST.get("prevpath")
+        edit_profile_form = EditProfileForm(request.POST, instance=request.user)
+        if edit_profile_form.is_valid():
+            edit_profile_form.save()
+            return redirect('/record')
+    data = {"edit_profile_form": edit_profile_form}
+    return render(request, "webapp/edit_profile.html", data)
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def upload_image(request):
+    context = {}
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        context['url'] = fs.url(name)
+    return render(request, 'webapp/patient/upload.html', context)
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def upload_video(request):
+    context = {}
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        context['url'] = fs.url(name)
+    return render(request, 'webapp/patient/upload.html', context)
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def file_list(request):
+    files = File.objects.all()
+    return render(request, 'webapp/patient/file_list.html',{'files':files})
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def upload_file(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('record/files')
+    else:
+        form = FileForm()
+    return render(request, 'webapp/patient/upload_file.html', {
+        'form': form
+    })
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def delete_file(request, pk):
+    if request.method == 'POST':
+        file = File.objects.get(pk=pk)
+        file.delete()
+    return redirect('file_list')
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def doctor_orders(request):
+    orders = Order.objects.all()
+    return render(request, 'webapp/patient/doctor_orders.html',{'orders':orders})
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def upload_doctor_orders(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('record/doctor_orders')
+    else:
+        form = FileForm()
+    return render(request, 'webapp/patient/upload_doctor_orders.html', {
+        'form': form
+    })
+
+@login_required(login_url='/')
+@allowed_users(allowed_roles=['P'])
+def delete_order(request, pk):
+    if request.method == 'POST':
+        order = File.objects.get(pk=pk)
+        order.delete()
+    return redirect('doctor_orders')
+
+
+
+
+
 
 # HTMX
 
