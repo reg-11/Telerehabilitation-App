@@ -120,3 +120,13 @@ class createTeleconsultationHours(ModelForm):
         for index in range(int(extra_fields)):
             self.fields['extra_field_{index}'.format(index=index)] = \
                 ModelForm.TimeInput(required=False)
+            
+class FileForm(ModelForm):
+    class Meta:
+        model = File
+        fields = ('filename','pdf')
+
+class OrderForm(ModelForm):
+    class Meta:
+        model = File
+        fields = ('filename','pdf')
