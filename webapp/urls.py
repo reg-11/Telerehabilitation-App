@@ -51,6 +51,19 @@ urlpatterns = [
     path('physical_therapists/', views.physical_therapists, name='physical_therapists'),
     path('physical_therapists/<int:user_id>/', views.view_profile_pt, name='view_profile_pt'),
     path('physical_therapists/appointment_hours/<int:user_id>/', views.view_pt_appointment_hours, name='view_pt_appointment_hours'),
+    
+    path('record/', views.record, name='record'),
+    path('record/update_info', views.record_update_info, name='record_update_info'),
+    path('record/upload_image', views.upload_image, name='upload_image'),
+    path('record/upload_video', views.upload_video, name='upload_video'),
+    path('record/files', views.file_list, name='file_list'),
+    path('record/upload_file', views.upload_file, name='upload_file'),
+    path('record/delete_file/<int:pk>', views.delete_file, name='delete_file'),
+        
+    path('record/doctor_orders', views.doctor_orders, name='doctor_orders'),
+    path('record/upload_doctor_orders', views.upload_doctor_orders, name='upload_doctor_orders'),
+    path('record/delete_order/<int:pk>', views.delete_order, name='delete_order'),
+    
     # Reset Password
     path(
         "reset_password/",
