@@ -1,0 +1,128 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Resources{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+	<div class="main-content-area">
+		<h1>Patient Records</h1>
+
+    	<h3 class="name">{{user.first_name}} {{user.last_name}}</h3>
+			<h6 class="account-type">{{user.get_role_display}}</h6>
+
+			<div class="profile-page-card-body">
+				<div class="info-group">
+					<h6 class="label">Birthdate</h6>
+					<p class="info">{{user.birthdate}}</p>
+				</div>
+				<div class="info-group">
+					<h6 class="label">Age</h6>
+					<p class="info">{{user.age}}</p>
+				</div>
+				<div class="info-group">
+					<h6 class="label">Sex</h6>
+					<p class="info">{{user.get_sex_display}}</p>
+				</div>
+				<div class="info-group">
+					<h6 class="label">Email</h6>
+					<p class="info">{{user.email}}</p>
+				</div>
+				<div class="info-group">
+					<h6 class="label">Phone Number</h6>
+					<p class="info">{{user.contact_number}}</p>
+				</div>
+			</div>
+
+
+			<div>
+				<h5>Update Information</h5>
+		
+				<a href="{% url 'webapp:record_update_info' %}">
+				<span
+					style="
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					top: 0;
+					left: 0;
+					z-index: 1;
+					"
+				></span>
+				</a>
+			</div>
+		
+			<div>
+				<h5>Upload File</h5>
+		
+				<a href="{% url 'webapp:upload_file' %}">
+				<span
+					style="
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					top: 0;
+					left: 0;
+					z-index: 1;
+					"
+				></span>
+				</a>
+			</div>
+			<div>
+				<h5>Upload Image</h5>
+		
+				<a href="{% url 'webapp:upload_image' %}">
+				<span
+					style="
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					top: 0;
+					left: 0;
+					z-index: 1;
+					"
+				></span>
+				</a>
+			</div>
+			<div>
+				<h5>Upload Video</h5>
+		
+				<a href="{% url 'webapp:upload_video' %}">
+				<span
+					style="
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					top: 0;
+					left: 0;
+					z-index: 1;
+					"
+				></span>
+				</a>
+			</div>
+			<div>
+				<h5>Upload Doctor Orders</h5>
+		
+				<a href="{% url 'webapp:upload_doctor_orders' %}">
+				<span
+					style="
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					top: 0;
+					left: 0;
+					z-index: 1;
+					"
+				></span>
+				</a>
+			</div>
+
+
+		
+	</div>
+
+	
+
+	{% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Resources{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+	<div class="main-content-area">
+		<h1>Files:</h1>
+
+        <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>File name</th>
+                <th>Download</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders %}
+                <tr>
+            
+                  <td>{{ order.filename }}</td>
+                  <td>
+                    <a href="{{ order.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
+                      Download PDF
+                    </a>
+                  </td>
+                  <td>
+                    <form method="post" action="{% url 'delete_order' order.pk %}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        
+	</div>
+
+	
+
+	{% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}

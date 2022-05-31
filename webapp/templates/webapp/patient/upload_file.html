@@ -1,0 +1,40 @@
+{% extends 'webapp/base.html' %}
+
+{% block title %}Resources{% endblock title %}
+
+{% block content %}
+<div class="main-grid-container">
+	{% include 'webapp/nav_sidebar.html' %}
+	<div class="main-content-area">
+		<h1>Upload File</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <button type="submit" class="btn btn-primary">Upload file</button>
+          </form>
+
+          <div>
+            <h5>File List</h5>
+        
+            <a href="{% url 'webapp:file_list' %}">
+            <span
+              style="
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              top: 0;
+              left: 0;
+              z-index: 1;
+              "
+            ></span>
+              </a>
+          </div>
+	
+	</div>
+
+	
+
+	{% include 'webapp/footer.html' %}
+</div>
+{% endblock content %}
